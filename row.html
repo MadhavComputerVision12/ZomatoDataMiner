@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Details</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .photo {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .details {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .rating {
+            color: gold;
+            font-weight: bold;
+        }
+        .info {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .highlight {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurant Details</h1>
+    <div class="photo">
+        {% if row.thumb %}
+            <img src="{{ row.thumb }}" alt="Theme Image" style="max-width: 400px; max-height: 400px;">
+        {% endif %}
+    </div>
+    <div class="details">
+        <h2 class="highlight">{{ row['name'] }}</h2>
+        <p class="rating">{{ row.rating_text }} ({{ row.aggregate_rating }})</p>
+        <p class="info">{{ row.cuisines }}</p>
+        <p class="info">Restaurant ID: {{ row.res_id }}</p>
+    </div>
+    <div class="info">
+        {% if row.has_online_delivery %}
+            <p>Online Delivery: Yes</p>
+        {% else %}
+            <p>Online Delivery: No</p>
+        {% endif %}
+        {% if row.is_delivering_now %}
+            <p>Delivering Now: Yes</p>
+        {% else %}
+            <p>Delivering Now: No</p>
+        {% endif %}
+        <p>Average Cost for Two: {{ row.average_cost_for_two }}</p>
+        <p>Offers: {{ row.offers }}</p>
+        <p>Address: {{ row.address }}</p>
+        <p>City: {{ row.city }}</p>
+        <p>Country ID: {{ row.country_id }}</p>
+        <p>Numeric Ratings: {{ row.numeric_ratings }}</p>
+    </div>
+</body>
+</html>

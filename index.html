@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+        .table-wrapper {
+            overflow-y: auto;
+            max-height: 400px; /* Adjust this height as needed */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Search Results</h1>
+        <div class="table-wrapper">
+            {% for table in tables %}
+                {{ table | safe }}
+            {% endfor %}
+        </div>
+        <div id="table-pagination" class="d-flex justify-content-center"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var table = $('table.data').DataTable({
+                "pageLength": 2,
+                "searching": false,
+                "pagingType": "full_numbers",
+                "dom": 'rt<"bottom"p><"clear">' 
+            });
+
+            // Move the pagination controls outside of the table wrapper
+            $('#table-pagination').append($('.dataTables_paginate'));
+            
+            // Add event listener to table rows
+            $('table.data').on('click', 'td', function() {
+                var row = table.row($(this).closest('tr'));
+                var index = row.index();
+                console.log(index);
+                window.location.href = `/row/${index}`;
+            });
+        });
+    </script>
+</body>
+</html>
